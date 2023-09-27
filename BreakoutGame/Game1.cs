@@ -15,8 +15,8 @@ namespace Breakout134
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        int boxHeight = 1280;
-        int boxWidth = 720;
+        int boxHeight = 720;
+        int boxWidth = 1280;
         int score = 0;
         int counter = 0;
         int highscore;
@@ -40,13 +40,15 @@ namespace Breakout134
         Rectangle gameOverRec;
         
 
-        Rectangle[] BlockArray;
-
         MouseState mouseState;
         Vector2 mousePos;
         Boll boll1;
         Bricks bricks1;
+        Padle padle1;
         bool resetBall;
+        List<Texture2D> block1 = new List<Texture2D>();
+        List<Texture2D> block2 = new List<Texture2D>();
+        List<Texture2D> block3 = new List<Texture2D>();
         
         public Game1()
         {
@@ -54,7 +56,7 @@ namespace Breakout134
            
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
 
             _graphics.PreferredBackBufferHeight = boxHeight;
             _graphics.PreferredBackBufferWidth = boxWidth;
@@ -76,14 +78,14 @@ namespace Breakout134
             Texture2D bollen = Content.Load<Texture2D>("ball_breakout");
             Vector2 bollPos = new Vector2(50, 50);
             Texture2D colorblock = Content.Load<Texture2D>("block_breakout");
-            Rectangle block = new Rectangle();
-            Rectangle blockRec = new Rectangle(0, 0, 50, 25);
+            //Rectangle block = new Rectangle();
+            Rectangle blockRec = new Rectangle(0,0,colorblock.Width, colorblock.Height);
             Texture2D padle = Content.Load<Texture2D>("padle");
-            Rectangle padleRec = new Rectangle();
+            //Rectangle padleRec = new Rectangle();
             Vector2 bollDir = new Vector2(5, -5);
             Vector2 scorePos = new Vector2(50, 50);
             boll1 = new Boll(_spriteBatch, bollen);
-
+            block1.Add(colorblock);
             
             //bollRec = new Rectangle((Window.ClientBounds.Width)
 
@@ -97,12 +99,14 @@ namespace Breakout134
 
             boll1.Update();
             bricks1.Update();
+            padle1.Update();
             //boll1.CheckCrash();
             //boll.CheckCrash(padle);
             // TODO: Add your update logic here
-            mouseState = Mouse.GetState();
-            mousePos.X = mouseState.X - 73;
-            mousePos.Y = 350;
+            //padle1.Update();
+            //mouseState = Mouse.GetState();
+            //mousePos.X = mouseState.X - 73;
+            //mousePos.Y = 350;
             base.Update(gameTime);
         }
 
@@ -110,10 +114,10 @@ namespace Breakout134
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            _spriteBatch.Draw(colorblock, mousePos, Color.Red);
+
             boll1.Draw();
+            padle1.Draw();
             bricks1.Draw();
-            _spriteBatch.Draw(padle, mousePos, Color.Red);
 
             _spriteBatch.End();
 

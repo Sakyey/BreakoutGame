@@ -22,10 +22,10 @@ namespace BreakoutGame
             int brickWidth = 25;
             int brickHeight = 10;
 
-        public Bricks(SpriteBatch spriteBatch, Texture2D block)
+        public Bricks(SpriteBatch spriteBatch, Texture2D colorblock)
         {
             _spriteBatch = spriteBatch;
-            _block= block;
+            _block= colorblock;
             pos = Vector2.Zero;
             SetBrickSize();
             IsVisible = true;
@@ -41,13 +41,13 @@ namespace BreakoutGame
             brickY = y;
             SetBrickSize();
         }
+        public void Update()
+        {
+
+        }
         public void Draw()
         {
             _spriteBatch.Draw(_block, bricks, Color.White);
-
-        }
-        public void Update()
-        {
 
         }
   
