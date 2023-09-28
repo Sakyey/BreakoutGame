@@ -11,26 +11,43 @@ namespace BreakoutGame
 {
     internal class Padle
     {
-        SpriteBatch _spriteBatch;
         Texture2D padleTex;
-
+        Rectangle padleRec;
+        Vector2 padlePos;
         MouseState mouseState;
         Vector2 mousePos;
-        public Padle(SpriteBatch spriteBatch, Texture2D padle)
+        Vector2 padleSpeed = new Vector2(10);
+        public bool holdingleft;
+        public bool holdingright;
+
+        public Padle(Texture2D padle)
         {
-            padleTex = padle;
+            this.padleTex = padle;
+            mousePos = new Vector2();
+            Rectangle padleRec = new Rectangle((int)mousePos.X, (int)mousePos.Y, padle.Width, padle.Height);
         }
         public void Update()
         {
             mouseState = Mouse.GetState();
             mousePos.X = mouseState.X - 73;
-            mousePos.Y = 350;
+            mousePos.Y = 700;
+
+            KeyboardState ks = Keyboard.GetState();
+            if (ks.IsKeyDown(Keys.Left))
+            {
+                padleRec.X -= (int)padleSpeed.X;
+                holdingleft = true;
+            }
+            else if (ks.IsKeyDown(Keys.Right))
+            {
+                padleRec.X += (int)padleSpeed.X;
+                holdingright = true;
+            }
+
         }
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(padleTex, mousePos, Color.Red);
-            _spriteBatch.End();
+            spriteBatch.Draw(padleTex, mousePos, Color.Red);
         }
 
     }
