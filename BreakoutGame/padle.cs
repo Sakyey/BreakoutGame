@@ -13,10 +13,10 @@ namespace BreakoutGame
     {
         Texture2D padleTex;
         Rectangle padleRec;
-        Vector2 padlePos;
+        Vector2 padlePosX;
+        Vector2 padlePosY;
         MouseState mouseState;
         Vector2 mousePos;
-        Vector2 padleSpeed = new Vector2(10);
         public bool holdingleft;
         public bool holdingright;
 
@@ -26,23 +26,24 @@ namespace BreakoutGame
             mousePos = new Vector2();
             Rectangle padleRec = new Rectangle((int)mousePos.X, (int)mousePos.Y, padle.Width, padle.Height);
         }
+        public Rectangle PadleHitBox() { return padleRec; }
         public void Update()
         {
             mouseState = Mouse.GetState();
             mousePos.X = mouseState.X - 73;
             mousePos.Y = 700;
 
-            KeyboardState ks = Keyboard.GetState();
-            if (ks.IsKeyDown(Keys.Left))
-            {
-                padleRec.X -= (int)padleSpeed.X;
-                holdingleft = true;
-            }
-            else if (ks.IsKeyDown(Keys.Right))
-            {
-                padleRec.X += (int)padleSpeed.X;
-                holdingright = true;
-            }
+            //KeyboardState ks = Keyboard.GetState();
+            //if (ks.IsKeyDown(Keys.Left))
+            //{
+            //    padleRec.X -= (int)padleSpeed.X;
+            //    holdingleft = true;
+            //}
+            //else if (ks.IsKeyDown(Keys.Right))
+            //{
+            //    padleRec.X += (int)padleSpeed.X;
+            //    holdingright = true;
+            //}
 
         }
         public void Draw(SpriteBatch spriteBatch)

@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection.Metadata;
 
 namespace BreakoutGame
 {
     public class Bricks
     {
+        public bool IsActive { get; set; }
        public SpriteBatch _spriteBatch;
        public Texture2D _block;
        public Vector2 pos;
@@ -28,7 +30,7 @@ namespace BreakoutGame
             _block= colorblockTex;
             pos = Vector2.Zero;
             SetBrickSize();
-            IsVisible = true;
+            IsActive = true; ;
         }
         public void SetBrickSize()
         {
@@ -45,9 +47,14 @@ namespace BreakoutGame
         {
             
         }
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
+            if (IsActive)
+            {
             _spriteBatch.Draw(_block, pos, Color.Red);
+
+            }
+            
 
         }
   

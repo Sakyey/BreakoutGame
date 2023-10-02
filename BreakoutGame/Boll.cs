@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BreakoutGame;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -11,6 +12,7 @@ namespace Breakout134
 {
     public class Boll
     {
+        
         SpriteBatch _spriteBatch;
         public Texture2D bollTex;
         public Vector2 bollPos;
@@ -25,6 +27,7 @@ namespace Breakout134
         public int maximumY;
         public int colWall = 0;
         public int colBrick = 0;
+        public Rectangle brickRec;
         //Vector2 bollPos;
         Vector2 velocity;
 
@@ -36,18 +39,20 @@ namespace Breakout134
             bollTex = bollen;
             bollPos = new Vector2(ballX, ballY);
             velocity = new Vector2(randXVel.Next(2, 9), randYVel.Next(-7, 0));
-            bollRec = new Rectangle((int)bollPos.X, (int)bollPos.Y, 32, 32);
+            bollRec = new Rectangle((int)bollPos.X, (int)bollPos.Y, bollen.Width,bollen.Height);
             //crash = false;
             maximumX = wX;
             maximumY = wY;
             changeDir = false;
         }
+        public Rectangle BollHitBox() { return bollRec; }
         public void Update()
         {
             bollPos += velocity;
+            
             //bollPos.X = bollPos.X + bollDir.X;
             //bollPos.Y = bollPos.Y + bollDir.Y;
-            crash = true;
+            crash = false;
 
             
              if (bollPos.X > maximumX-30 || bollPos.X < 0)
@@ -57,15 +62,20 @@ namespace Breakout134
                 colWall++;
              }
 
-             if (/*bollPos.Y > maximumY-30 ||*/ bollPos.Y < 0)
+             if (bollPos.Y > maximumY-30 || bollPos.Y < 0)
              {
                 velocity.Y = velocity.Y * -1;
                 changeDir = true;
                 colWall++;
              }
              
+           
             
-            
+        }
+        public void Reverse()
+        {
+            crash= true;
+            velocity.Y = velocity.Y * 1;
         }
         public void Draw()
         {
@@ -73,9 +83,12 @@ namespace Breakout134
         }
         public void CheckCrash(Rectangle bricks)
         {
-            if (bollRec.Intersects(bricks))
+            brickRec = bricks;
+            if (bollRec.Intersects(brickRec))
             {
                 crash = true;
+                velocity.Y = velocity.Y * -1;
+               
                 //if (bollPos.X < maximumX && bollPos.X > 0)
                 //{
 
